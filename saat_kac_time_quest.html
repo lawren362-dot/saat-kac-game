@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saat Kaç? — 土耳其语猜时间闯关</title>
+<style>
+:root{--navy:#243b53;--navy2:#405a75;--gold:#e9c46a;--green:#2e8b70;--red:#d65a5a;--paper:#f5f7fb;--ink:#172b4d;--muted:#68778b;--line:#dce3ec}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(140deg,#edf3f9,#fbf8ef);font-family:Inter,"Segoe UI","Microsoft YaHei",sans-serif;color:var(--ink);min-height:100vh;padding:24px}
+.wrap{max-width:760px;margin:auto}.hero{background:var(--navy);color:white;border-radius:24px;padding:26px;box-shadow:0 16px 40px #243b5322}
+.kicker{font-size:12px;letter-spacing:2px;color:#c7d9ef}.hero-row{display:flex;justify-content:space-between;align-items:center;gap:16px}.hero h1{font-size:clamp(26px,5vw,38px);margin:8px 0}.hero p{color:#d9e4ef;margin:0}.score{background:var(--navy2);padding:12px 18px;border-radius:16px;text-align:center;min-width:100px}.score strong{font-size:25px;display:block}.score small{color:#e2eaf2}.progress{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:24px}.step{border-radius:12px;padding:10px;text-align:center;background:var(--navy2);color:#d7e0ea;font-size:13px}.step .emoji{font-size:21px;display:block;margin-bottom:4px}.step.active{background:var(--gold);color:var(--navy);font-weight:700}.step.done{background:#367d68;color:white}
+.panel{background:white;border:1px solid var(--line);border-radius:24px;margin-top:18px;padding:24px;box-shadow:0 10px 30px #243b530c}.topline{display:flex;justify-content:space-between;gap:12px;align-items:center}.topline h2{font-size:22px;margin:0}.sub{color:var(--muted);font-size:14px;margin-top:5px}.pill{border-radius:999px;background:#edf1f6;padding:7px 12px;font-size:13px;white-space:nowrap}
+.clock-card{margin:22px 0;background:var(--paper);border-radius:20px;padding:22px;text-align:center}.clock{width:160px;height:160px;border:8px solid var(--navy);border-radius:50%;margin:0 auto 15px;background:white;position:relative;box-shadow:inset 0 0 0 2px #dce3ec}.clock .num{position:absolute;font-weight:700;font-size:17px;transform:translate(-50%,-50%)}.hand{position:absolute;left:50%;top:50%;transform-origin:50% 100%;border-radius:8px;z-index:2}.hour{height:42px;width:6px;background:var(--navy);transform:translate(-50%,-100%) rotate(0deg)}.minute{height:58px;width:4px;background:#d97706;transform:translate(-50%,-100%) rotate(0deg)}.pin{position:absolute;z-index:3;width:13px;height:13px;border-radius:50%;background:var(--navy);left:50%;top:50%;transform:translate(-50%,-50%)}.time{font-size:32px;font-weight:800;letter-spacing:1px}.prompt{font-weight:700;margin-top:5px}.translation{font-size:13px;color:var(--muted);margin-top:4px}
+.answers{display:grid;gap:10px;margin-top:12px}.answer{display:flex;align-items:center;gap:12px;text-align:left;width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;background:white;font-size:15px;color:var(--ink);cursor:pointer;transition:.15s}.answer:hover:not(:disabled){border-color:#8398b0;transform:translateY(-1px)}.letter{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:50%;background:#edf1f6;font-weight:700}.answer.correct{background:#ddf4e9;border-color:var(--green);color:#176b50}.answer.correct .letter{background:var(--green);color:white}.answer.incorrect{background:#fce8e6;border-color:var(--red);color:#a33131}.answer.incorrect .letter{background:var(--red);color:white}.feedback{margin-top:14px;padding:15px;border-radius:14px;background:var(--paper);line-height:1.6}.feedback strong{display:block;margin-bottom:4px}.btn{border:0;border-radius:13px;padding:13px 18px;font-weight:700;font-size:15px;cursor:pointer}.primary{background:var(--navy);color:white;width:100%;margin-top:14px}.primary:hover{background:#304b67}.ghost{background:transparent;color:var(--muted);padding:8px 0;font-size:13px}.footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;color:var(--muted);font-size:12px}.hidden{display:none!important}.finish{text-align:center;padding:20px 4px}.trophy{font-size:70px}.finish h2{font-size:30px;margin:10px}.result{background:var(--paper);padding:20px;border-radius:18px;margin:20px 0}.result strong{font-size:38px;display:block}.tipbox{margin-top:18px;background:white;border:1px solid var(--line);border-radius:20px;padding:20px}.tipbox h3{margin:0 0 12px}.tipbox p{line-height:1.65;margin:8px 0}.tipbox b{color:var(--navy)}@media(max-width:520px){body{padding:12px}.hero,.panel{padding:18px;border-radius:20px}.score{min-width:78px;padding:10px}.clock{width:145px;height:145px}.hour{height:37px}.minute{height:52px}.time{font-size:28px}.footer{align-items:flex-start}.topline h2{font-size:19px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-row">
+      <div><div class="kicker">TIME QUEST · TURKISH</div><h1>🕒 Saat Kaç?</h1><p>土耳其语猜时间闯关挑战</p></div>
+      <div class="score"><strong id="score">0</strong><small>累计积分 ⭐</small></div>
+    </div>
+    <div class="progress" id="progress"></div>
+  </header>
+  <main class="panel" id="game">
+    <div class="topline"><div><h2 id="levelTitle">🌱 第 1 关：新手村</h2><div class="sub" id="levelSub">整点挑战</div></div><div class="pill" id="counter">第 1 / 3 题</div></div>
+    <section class="clock-card">
+      <div class="clock" id="clock" aria-label="模拟时钟"><div class="hand hour" id="hourHand"></div><div class="hand minute" id="minuteHand"></div><div class="pin"></div></div>
+      <div class="time" id="digitalTime">03:00</div><div class="prompt">Saat kaç?</div><div class="translation">现在几点？请选择正确的土耳其语表达。</div>
+    </section>
+    <div style="font-weight:700">请选择正确答案：</div>
+    <div class="answers" id="answers"></div>
+    <div class="feedback hidden" id="feedback" aria-live="polite"></div>
+    <button class="btn primary hidden" id="next">下一题 →</button>
+    <div class="footer"><span>答对得 1 分，答错也可以继续挑战</span><button class="btn ghost" id="reset">重置游戏 ↺</button></div>
+  </main>
+  <main class="panel hidden" id="finish">
+    <div class="finish"><div class="trophy">🏆</div><h2>恭喜通关！</h2><p>你成功征服了时间王国的全部关卡！</p><div class="result"><span>最终积分</span><strong id="finalScore">0 / 9</strong><div id="remark">继续练习，你会越来越熟练！</div></div><button class="btn primary" id="restart">🔄 重新挑战</button></div>
+  </main>
+  <section class="tipbox"><h3>🗝️ 通关秘籍</h3><p><b>Saat üç.</b> — 三点整。<br><b>Saat üç buçuk.</b> — 三点半。</p><p><b>Saat dördü çeyrek geçiyor.</b> — 四点一刻。<br><b>Saat dörde çeyrek var.</b> — 差一刻四点。</p><p style="color:var(--muted);font-size:13px">小提示：<i>buçuk</i> 表示半点；<i>geçiyor</i> 表示过了几分钟；<i>var</i> 表示距离下一个小时还差几分钟。</p></section>
+</div>
+<script>
+const levels=[
+{name:"新手村",sub:"整点挑战",emoji:"🌱",questions:[
+{time:"03:00",h:3,m:0,opts:["Saat üç.","Saat dört.","Saat iki.","Saat üç buçuk."],ans:0,tip:"整点：Saat + 数字。"},
+{time:"07:00",h:7,m:0,opts:["Saat altı.","Saat yedi.","Saat sekiz.","Saat yedi buçuk."],ans:1,tip:"7 = yedi。"},
+{time:"12:00",h:12,m:0,opts:["Saat on iki.","Saat on bir.","Saat iki.","Saat on iki buçuk."],ans:0,tip:"12 = on iki。"}]},
+{name:"进阶之路",sub:"半点挑战",emoji:"⭐",questions:[
+{time:"03:30",h:3,m:30,opts:["Saat üç.","Saat üç buçuk.","Saat dört buçuk.","Saat üç çeyrek."],ans:1,tip:"buçuk = 半点。"},
+{time:"06:30",h:6,m:30,opts:["Saat altı.","Saat yedi buçuk.","Saat altı buçuk.","Saat beş buçuk."],ans:2,tip:"6 = altı，半点 = buçuk。"},
+{time:"08:30",h:8,m:30,opts:["Saat sekiz buçuk.","Saat dokuz buçuk.","Saat sekiz.","Saat yedi buçuk."],ans:0,tip:"8 = sekiz。"}]},
+{name:"时间高手",sub:"分钟大挑战",emoji:"🏆",questions:[
+{time:"04:15",h:4,m:15,opts:["Saat dördü çeyrek geçiyor.","Saat dörde çeyrek var.","Saat dört buçuk.","Saat dördü on geçiyor."],ans:0,tip:"çeyrek geçiyor = 过一刻。"},
+{time:"08:45",h:8,m:45,opts:["Saat sekizi çeyrek geçiyor.","Saat dokuzu çeyrek geçiyor.","Saat dokuza çeyrek var.","Saat sekiz buçuk."],ans:2,tip:"çeyrek var = 差一刻到下一个小时。"},
+{time:"10:10",h:10,m:10,opts:["Saat onu on geçiyor.","Saat ona on var.","Saat on buçuk.","Saat onu yirmi geçiyor."],ans:0,tip:"on geçiyor = 过十分钟。"}]}
+];
+let level=0,qi=0,score=0,choice=null,done=[];
+const $=id=>document.getElementById(id);
+function drawClock(h,m){$('hourHand').style.transform=`translate(-50%,-100%) rotate(${(h%12)*30+m*.5}deg)`;$('minuteHand').style.transform=`translate(-50%,-100%) rotate(${m*6}deg)`;const clock=$('clock');clock.querySelectorAll('.num').forEach(n=>n.remove());for(let n=1;n<=12;n++){let e=document.createElement('span');e.className='num';e.textContent=n;let a=n*Math.PI/6;let r=clock.clientWidth*.36;e.style.left=(clock.clientWidth/2+Math.sin(a)*r)+'px';e.style.top=(clock.clientHeight/2-Math.cos(a)*r)+'px';clock.appendChild(e)}}
+function renderProgress(){$('progress').innerHTML=levels.map((l,i)=>`<div class="step ${done.includes(i)?'done':level===i?'active':''}"><span class="emoji">${done.includes(i)?'✓':l.emoji}</span>第 ${i+1} 关</div>`).join('')}
+function render(){let l=levels[level],q=l.questions[qi];choice=null;$('levelTitle').textContent=`${l.emoji} 第 ${level+1} 关：${l.name}`;$('levelSub').textContent=l.sub;$('counter').textContent=`第 ${qi+1} / 3 题`;$('digitalTime').textContent=q.time;drawClock(q.h,q.m);$('feedback').classList.add('hidden');$('next').classList.add('hidden');$('answers').innerHTML='';q.opts.forEach((opt,i)=>{let b=document.createElement('button');b.className='answer';b.innerHTML=`<span class="letter">${'ABCD'[i]}</span><span>${opt}</span>`;b.onclick=()=>answer(i);$('answers').appendChild(b)});$('score').textContent=score;renderProgress()}
+function answer(i){if(choice!==null)return;choice=i;let q=levels[level].questions[qi];if(i===q.ans)score++;[...$('answers').children].forEach((b,j)=>{b.disabled=true;if(j===q.ans)b.classList.add('correct');if(j===i&&i!==q.ans)b.classList.add('incorrect')});$('score').textContent=score;$('feedback').classList.remove('hidden');$('feedback').innerHTML=`<strong>${i===q.ans?'回答正确！🎉':'还差一点！💪'}</strong>${i===q.ans?'你获得了 1 分！':`正确答案是：${q.opts[q.ans]}`}<br>💡 ${q.tip}`;$('next').classList.remove('hidden');$('next').textContent=qi<2?'下一题 →':level<2?'解锁下一关 🔓':'领取通关奖励 🏆'}
+$('next').onclick=()=>{if(qi<2)qi++;else if(level<2){done.push(level);level++;qi=0}else{done.push(level);$('game').classList.add('hidden');$('finish').classList.remove('hidden');$('finalScore').textContent=`${score} / 9`;$('remark').textContent=score>=8?'🏆 时间大师！':score>=5?'🌟 表现很棒，继续加油！':'🌱 再练习一次，你会越来越熟练！';renderProgress();return}render()};
+function reset() {level=0;qi=0;score=0;choice=null;done=[];$('game').classList.remove('hidden');$('finish').classList.add('hidden');render()}
+$('reset').onclick=reset;$('restart').onclick=reset;window.addEventListener('resize',()=>drawClock(levels[level].questions[qi].h,levels[level].questions[qi].m));render();
+</script>
+</body>
+</html>
